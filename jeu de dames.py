@@ -56,7 +56,7 @@ def pions(damier):
 def game_statu(damier):
     """
     Fonction qui gère le jeu.
-    :return: list
+    :return: bool
     """
     Player1alive = False
     Player2alive = False
@@ -88,9 +88,9 @@ def game_statu(damier):
 
 def print_plat(damier):
     """
-
-    :param damier:
-    :return:
+    Fonction qui renvoie le plateau et qui évite le retour des pions à leur place.
+    :param damier:list
+    :return: list
     """
 
     for i in range(len(damier)):
@@ -98,7 +98,7 @@ def print_plat(damier):
 
 def game_manager(damier):
     """
-    Fonction du fonctionnement du jeu de dames
+    Fonction du fonctionnement du jeu de dames.
     :entrée: list
     :return: list
     """
