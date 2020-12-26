@@ -99,7 +99,7 @@ def print_plat(damier):
 
 def deplacement(damier):
     """
-
+    Fonction de déplacement
     :param damier:
     :return:
     """
