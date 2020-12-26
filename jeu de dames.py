@@ -19,6 +19,7 @@ def pions(damier):
         ;entrée: list
         :return: list
         """
+    damier[0][0] = 1
 
     #Creation coordonnées.
     for loop in range(1,11):
@@ -96,16 +97,15 @@ def print_plat(damier):
     for i in range(len(damier)):
         print(damier[i])
 
-def game_manager(damier):
+def deplacement(damier):
     """
-    Fonction du fonctionnement du jeu de dames.
-    :entrée: list
-    :return: list
+
+    :param damier:
+    :return:
     """
 
     pions(damier)
     isFinish = not game_statu(damier)
-
 
     while isFinish != True:
 
@@ -118,41 +118,82 @@ def game_manager(damier):
             move = False
             xJ1_d = int(input("Rentrez l'abscisse de la position de votre pion : "))
             yJ1_d = int(input("Rentrez l'ordonnée de la position de votre pion : "))
-            if damier[yJ1_d][xJ1_d] == 1 and (xJ1_d != 0 and yJ1_d != 0):
-                if damier[yJ1_d + 1][xJ1_d - 1] == 0:
-                    print(" ")
-                    print("possible en : P[",xJ1_d - 1,';', yJ1_d + 1,']')
-                    play = True
-                if damier[yJ1_d + 1][xJ1_d + 1] == 0:
-                    print("possible en : P[",xJ1_d + 1,';', yJ1_d + 1,']')
-                    print(" ")
-                    play = True
-                elif not play:
-                    print_plat(damier)
-                    print(" ")
-                    print("Veuillez reesayer : Le déplacement est impossible")
-                    print(" ")
+            if xJ1_d > 0 and xJ1_d <= 10 and yJ1_d > 0 and yJ1_d <= 10:
+                if damier[yJ1_d][xJ1_d] == 1 and (xJ1_d != 0 and yJ1_d != 0):
+                    if damier[yJ1_d + 1][xJ1_d - 1] == 0:
+                        print(" ")
+                        print("deplacement possible en : P[", xJ1_d - 1, ';', yJ1_d + 1, ']')
+                        play = True
+                    if damier[yJ1_d + 1][xJ1_d + 1] == 0:
+                        print("deplacement possible en : P[", xJ1_d + 1, ';', yJ1_d + 1, ']')
+                        print(" ")
+                        play = True
+                    if damier[yJ1_d + 1][xJ1_d - 1] == 2 and damier[yJ1_d + 2][xJ1_d - 2] == 0:
+                        print(" ")
+                        print("peut manger en : P[", xJ1_d - 2, ';', yJ1_d + 2, ']')
+                        play = True
+                    if damier[yJ1_d + 1][xJ1_d + 1] == 2 and damier[yJ1_d + 2][xJ1_d + 2] == 0:
+                        print("peut manger en : P[", xJ1_d + 2, ';', yJ1_d + 2, ']')
+                        print(" ")
+                        play = True
+                    if damier[yJ1_d - 1][xJ1_d - 1] == 2 and damier[yJ1_d - 2][xJ1_d - 2] == 0:
+                        print(" ")
+                        print("peut manger en : P[", xJ1_d - 2, ';', yJ1_d - 2, ']')
+                        play = True
+                    if damier[yJ1_d - 1][xJ1_d + 1] == 2 and damier[yJ1_d - 2][xJ1_d + 2] == 0:
 
-            else:
-                print_plat(damier)
-                print(" ")
-                print("Veuillez reesayer : Il y a pas de pion ou ce n'est pas le votre")
-                print(" ")
-            if play:
-                xJ1_a = int(input("Rentrez l'abscisse de la case de déplacement : "))
-                yJ1_a = int(input("Rentrez l'ordonnée de la case de déplacement : "))
-                if damier[yJ1_a][xJ1_a] == 0 and (yJ1_a == yJ1_d + 1 and xJ1_a == xJ1_d + 1) or (yJ1_a == yJ1_d + 1 and xJ1_a == xJ1_d - 1):
-                    damier[yJ1_d][xJ1_d] = 0
-                    damier[yJ1_a][xJ1_a] = 1
-                    move =True
+
+                        print(" ")
+                        play = True
+                    elif not play:
+                        print_plat(damier)
+                        print(" ")
+                        print("Veuillez reesayer : Le déplacement est impossible")
+                        print(" ")
+
                 else:
                     print_plat(damier)
                     print(" ")
-                    print("Veuillez reesayer : déplacement impossible")
+                    print("Veuillez reesayer : Il y a pas de pion ou ce n'est pas le votre")
                     print(" ")
+                if play:
+                    xJ1_a = int(input("Rentrez l'abscisse de la case de déplacement : "))
+                    yJ1_a = int(input("Rentrez l'ordonnée de la case de déplacement : "))
+                    if xJ1_a > 0 and xJ1_a <= 10 and yJ1_a > 0 and yJ1_a <= 10:
+                        if damier[yJ1_a][xJ1_a] == 0 and (yJ1_a == yJ1_d + 1 and xJ1_a == xJ1_d + 1) or (
+                                yJ1_a == yJ1_d + 1 and xJ1_a == xJ1_d - 1):
+                            damier[yJ1_d][xJ1_d] = 0
+                            damier[yJ1_a][xJ1_a] = 1
+                            move = True
+                        elif (damier[yJ1_a - 1][xJ1_a - 1] == 2 or damier[yJ1_a - 1][xJ1_a + 1] == 2 or damier[yJ1_a + 1][xJ1_a - 1] == 2 or damier[yJ1_a + 1][xJ1_a + 1] == 2) and damier[yJ1_a][xJ1_a] == 0:
+                            damier[yJ1_d][xJ1_d] = 0
+                            if xJ1_a == xJ1_d + 2 and yJ1_d > yJ1_a:
+                                damier[yJ1_d - 1][xJ1_d + 1] = 0
+                            if xJ1_a == xJ1_d - 2 and yJ1_d > yJ1_a:
+                                damier[yJ1_d - 1][xJ1_d - 1] = 0
+                            if xJ1_a == xJ1_d + 2 and yJ1_d < yJ1_a:
+                                damier[yJ1_d + 1][xJ1_d + 1] = 0
+                            if xJ1_a == xJ1_d - 2 and yJ1_d < yJ1_a:
+                                damier[yJ1_d + 1][xJ1_d - 1] = 0
+                            damier[yJ1_a][xJ1_a] = 1
+                            move = True
+                        else:
+                            print_plat(damier)
+                            print(" ")
+                            print("Veuillez reesayer : déplacement impossible")
+                            print(" ")
+                    else:
+                        print_plat(damier)
+                        print("")
+                        print("Veuillez reesayer : déplacement impossible")
+                        print(" ")
+            else:
+                print_plat(damier)
+                print(" ")
+                print("Veuillez reesayer : déplacement impossible")
+                print(" ")
 
         print_plat(damier)
-
         play = False
         move = False
         print("Joueur 2 à vous de jouer")
@@ -162,40 +203,88 @@ def game_manager(damier):
             move = False
             xJ2_d = int(input("Rentrez l'abscisse de la position de votre pion : "))
             yJ2_d = int(input("Rentrez l'ordonnée de la position de votre pion : "))
-            if damier[yJ2_d][xJ2_d] == 2 and (xJ2_d != 0 and yJ2_d != 0):
-                if damier[yJ2_d - 1][xJ2_d - 1] == 0:
-                    print(" ")
-                    print("possible en : P[", xJ2_d - 1, ';', yJ2_d - 1, ']')
-                    play = True
-                if damier[yJ2_d - 1][xJ2_d + 1] == 0:
-                    print("possible en : P[", xJ2_d + 1, ';', yJ2_d - 1, ']')
-                    print(" ")
-                    play = True
-                elif not play:
-                    print_plat(damier)
-                    print(" ")
-                    print("Veuillez reesayer : déplacement impossible")
-                    print(" ")
+            if xJ2_d > 0 and xJ2_d <= 10 and yJ2_d > 0 and yJ2_d <= 10:
+                if damier[yJ2_d][xJ2_d] == 2 and (xJ2_d != 0 and yJ2_d != 0):
+                    if damier[yJ2_d - 1][xJ2_d - 1] == 0:
+                        print(" ")
+                        print("deplacement possible en : P[", xJ2_d - 1, ';', yJ2_d - 1, ']')
+                        play = True
+                    if damier[yJ2_d - 1][xJ2_d + 1] == 0:
+                        print("deplacement possible en : P[", xJ2_d + 1, ';', yJ2_d - 1, ']')
+                        play = True
+                    if damier[yJ2_d - 1][xJ2_d - 1] == 1 and damier[yJ2_d - 2][xJ2_d - 2] == 0:
+                        print(" ")
+                        print("peut manger en : P[", xJ2_d - 2, ';', yJ2_d - 2, ']')
+                        play = True
+                    if damier[yJ2_d - 1][xJ2_d + 1] == 1 and damier[yJ2_d - 2][xJ2_d + 2] == 0:
+                        print("peut manger en : P[", xJ2_d + 2, ';', yJ2_d - 2, ']')
+                        print(" ")
+                        play = True
+                    if damier[yJ2_d + 1][xJ2_d - 1] == 1 and damier[yJ2_d + 2][xJ2_d - 2] == 0:
+                        print(" ")
+                        print("peut manger en : P[", xJ2_d - 2, ';', yJ2_d + 2, ']')
+                        play = True
+                    if damier[yJ2_d + 1][xJ2_d + 1] == 1 and damier[yJ2_d + 2][xJ2_d + 2] == 0:
+                        print("peut manger en : P[", xJ2_d + 2, ';', yJ2_d + 2, ']')
+                        print(" ")
+                        play = True
+                    elif not play:
+                        print_plat(damier)
+                        print(" ")
+                        print("Veuillez reesayer : déplacement impossible")
+                        print(" ")
 
-            else:
-                print_plat(damier)
-                print(" ")
-                print("Veuillez reesayer : aucun pions")
-                print(" ")
-            if play:
-                xJ2_a = int(input("Rentrez l'abscisse de la case de déplacement : "))
-                yJ2_a = int(input("Rentrez l'ordonnée de la case de déplacement : "))
-                if damier[yJ2_a][xJ2_a] == 0 and (yJ2_a == yJ2_d - 1 and xJ2_a == xJ2_d + 1) or (yJ2_a == yJ2_d - 1 and xJ2_a == xJ2_d - 1):
-                    damier[yJ2_d][xJ2_d] = 0
-                    damier[yJ2_a][xJ2_a] = 2
-                    move = True
                 else:
                     print_plat(damier)
                     print(" ")
-                    print("Veuillez reesayer : déplacement impossible")
+                    print("Veuillez reesayer : aucun pions")
                     print(" ")
+                if play:
+                    xJ2_a = int(input("Rentrez l'abscisse de la case de déplacement : "))
+                    yJ2_a = int(input("Rentrez l'ordonnée de la case de déplacement : "))
+                    if xJ2_a > 0 and xJ2_a <= 10 and yJ2_a > 0 and yJ2_a <= 10:
+                        if damier[yJ2_a][xJ2_a] == 0 and (yJ2_a == yJ2_d - 1 and xJ2_a == xJ2_d + 1) or (yJ2_a == yJ2_d - 1 and xJ2_a == xJ2_d - 1):
+                            damier[yJ2_d][xJ2_d] = 0
+                            damier[yJ2_a][xJ2_a] = 2
+                            move = True
+                        elif (damier[yJ2_a + 1][xJ2_a - 1] == 1 or damier[yJ2_a + 1][xJ2_a + 1] == 1 or damier[yJ2_a - 1][xJ2_a - 1] == 1 or damier[yJ2_a - 1][xJ2_a + 1] == 1) and damier[yJ2_a ][xJ2_a ] == 0:
+                            damier[yJ2_d][xJ2_d] = 0
+                            if xJ2_a == xJ2_d + 2 and yJ2_d > yJ2_a:
+                                damier[yJ2_d - 1][xJ2_d + 1] = 0
+                            if xJ2_a == xJ2_d - 2 and yJ2_d > yJ2_a:
+                                damier[yJ2_d - 1][xJ2_d - 1] = 0
+                            if xJ2_a == xJ2_d + 2 and yJ2_d < yJ2_a:
+                                damier[yJ2_d + 1][xJ2_d + 1] = 0
+                            if xJ2_a == xJ2_d - 2 and yJ2_d < yJ2_a:
+                                damier[yJ2_d + 1][xJ2_d - 1] = 0
+                            damier[yJ2_a][xJ2_a] = 2
+                            move = True
+                        else:
+                            print_plat(damier)
+                            print(" ")
+                            print("Veuillez reesayer : déplacement impossible")
+                            print(" ")
+                    else:
+                        print_plat(damier)
+                        print(" ")
+                        print("Veuillez reesayer : déplacement impossible")
+                        print(" ")
+            else:
+                print_plat(damier)
+                print(" ")
+                print("Veuillez reesayer : déplacement impossible")
+                print(" ")
 
         print_plat(damier)
+
+def game_manager(damier):
+    """
+    Fonction du fonctionnement du jeu de dames.
+    :entrée: list
+    :return: list
+    """
+
+    deplacement(damier)
 
 
 game_manager(plateau())
