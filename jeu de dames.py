@@ -1,4 +1,4 @@
-GameStatu = True  # Statu de jeu à True
+GameStatut = True  # Statu de jeu à True
 
 
 def plateau():
@@ -75,11 +75,11 @@ def game_statut(damier):
 
     #Teste si le jeu est toujours en cours.
     if Player2alive and Player1alive:
-        GameStatu = True
+        GameStatut = True
     elif not Player1alive or not Player2alive:
-        GameStatu = False
+        GameStatut = False
 
-    return  GameStatu
+    return  GameStatut
 
 def print_plat(damier):
     """
@@ -113,7 +113,7 @@ def deplacement(damier):
 
         while not play or not move:
             for i in range(1, 3):
-                print("joueur ",i)
+                print("Joueur ",i, 'à vous de jouer !')
                 play = False
                 move = False
                 xJ_d = int(input("Rentrez l'abscisse de la position de votre pion : "))
